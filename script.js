@@ -1,14 +1,7 @@
-//multiply and divide btn issue
-
-const buttons = document.querySelector('.buttons');
-const display = document.querySelector('.display');
-const btn = document.querySelector('.btn');
 let number = document.querySelector('.firstDisplay');
-
-let numberText = number.textContent;
-let calculation = 0;
 let oldNumber = document.querySelector('.secondDisplay');
-let result = oldNumber.textContent;
+let calculation = 0;
+
 let plus = false;
 let minus = false;
 let multiply = false;
@@ -53,10 +46,6 @@ function button(num){
         in2 = true;
         number.textContent = input1 + symbol + input2;
     }
-}
-
-function key(num){
-    const keyCode = num.charCodeAt();
 }
 
 function symbolBtn(symb){
@@ -221,7 +210,7 @@ window.addEventListener('keydown', (keyDown) => {
     const keyCode = keyDown.key;
     const keyString = keyCode.toString();
     if (keyString >= 0 && keyString <= 9 || keyString == "."){
-        key(keyString);
+        keyString.charCodeAt();
         button(keyString);
     } else if (keyString == "+"){
         plus = true;
