@@ -6,6 +6,7 @@ let plus = false;
 let minus = false;
 let multiply = false;
 let divide = false;
+let enter = false;
 let in1 = false;
 let in2 = false;
 
@@ -16,7 +17,7 @@ let symbol = "";
 function addFunc(min,max) {
     const input1 = Number(min);
     const input2 = Number(max);
-	return input1 + input2;
+	return input1 + input2
 };
 
 function subtractFunc(min,max) {
@@ -41,6 +42,11 @@ function button(num){
     if (in1 === false){
         input1 += num;
         number.textContent = input1;
+        symbol = "";
+    } else if (enter == true){
+        input2 += num;
+        in2 = true;
+        number.textContent = "input operator";
     } else {
         input2 += num;
         in2 = true;
@@ -48,37 +54,33 @@ function button(num){
     }
 }
 
-function symbolBtn(symb){
+function symbolBtn(symb,operator){
+    enter = false;
     symbol = symb;
     number.textContent = symb;
     in1 = true;
+    input2 = "";
+    if (operator != true){      
+        plus = false;
+        minus = false;
+        multiply = false;
+        divide = false;
+    }
 }
 
 function backspaceFunction(){
     let array = [...number.textContent];
     array.pop();
     for (let i = 0; i < array.length; i++){
-        if (array[i] != 0 && array[i] == "-"){
+        function sliceFunction(i){
             sliced1 = array.slice(0,i);
             sliced2 = array.slice(i+1);
             input1 = sliced1.join('');
-            input2 = sliced2.join('');
-        }  else if (array[i] == "+"){
-            sliced1 = array.slice(0,i);
-            sliced2 = array.slice(i+1);
-            input1 = sliced1.join('');
-            input2 = sliced2.join('');
-        } else if (array[i] == "*"){
-            sliced1 = array.slice(0,i);
-            sliced2 = array.slice(i+1);
-            input1 = sliced1.join('');
-            input2 = sliced2.join('');
-        } else if (array[i] == "/"){
-            sliced1 = array.slice(0,i);
-            sliced2 = array.slice(i+1);
-            input1 = sliced1.join('');
-            input2 = sliced2.join('');
-        } 
+            input2 = sliced2.join(''); 
+        }
+        if (array[i] != 0 && array[i] == "-" || array[i] == "+" || array[i] == "+" || array[i] == "/"){
+            sliceFunction(i);
+        }  
     }
     if (input2 != ""){
         number.textContent = input1 + symbol + input2;
@@ -88,31 +90,34 @@ function backspaceFunction(){
 
 function enterFunction(){
     if (plus === true) {
-        calculation = addFunc(input1,input2)
+        calculation = Math.round(addFunc(input1,input2) * 100)/ 100;
         plus = false;
         input2 = "";
         input1 = calculation
     } else if (minus === true) {
-        calculation = subtractFunc(input1,input2)
+        calculation = Math.round(subtractFunc(input1,input2) * 100) / 100;
         minus = false;
         input2 = "";
         input1 = calculation; 
     } else if (multiply === true && input2 != "") {
-        calculation = multiplyFunc(input1,input2);
+        calculation = Math.round(multiplyFunc(input1,input2) * 100) / 100;
         multiply = false;
         input2 = "";
         input1 = calculation;
     } else if (divide === true && input2 != "") {
-        calculation = divideFunc(input1,input2)
+        calculation = Math.round(divideFunc(input1,input2) * 100) / 100;
         divide = false;
         input2 = "";
         input1 = calculation;
     }
     if (input2 === ""){
         oldNumber.textContent = input1;
+    } else if (in1 == false) {
+        oldNumber.textContent = number.innerText;
     } else {
         oldNumber.textContent = calculation;
     }
+    enter = true;
     number.textContent = "";
 }
 
@@ -125,24 +130,23 @@ function clearFunction(){
 }
 
 plusBtn.addEventListener('click', () => {
+    symbolBtn("+",plus);
     plus = true;
-    symbolBtn("+");
 })
 
-
 minusBtn.addEventListener('click', () => {
+    symbolBtn("-",minus);
     minus = true; 
-    symbolBtn("-");
 })
 
 multiplyBtn.addEventListener('click', () => {
+    symbolBtn("*",multiply);
     multiply = true;
-    symbolBtn("*");
 })
 
 divideBtn.addEventListener('click', () => {
+    symbolBtn("/",divide);
     divide = true;
-    symbolBtn("/");
 })
 
 zeroBtn.addEventListener('click', () => {
@@ -214,16 +218,16 @@ window.addEventListener('keydown', (keyDown) => {
         button(keyString);
     } else if (keyString == "+"){
         plus = true;
-        symbolBtn("+");
+        symbolBtn("+",plus);
     } else if (keyString == "-"){
         minus = true; 
-        symbolBtn("-");
+        symbolBtn("-",minus);
     } else if (keyString == "*"){
         multiply = true;
-        symbolBtn("*");
+        symbolBtn("*",multiply);
     }   else if (keyString == "/"){
         divide = true;
-        symbolBtn("/");
+        symbolBtn("/",divide);
     } else if (keyString == "Enter"){
         enterFunction(); 
     } else if (keyString == "Backspace"){
