@@ -29,14 +29,14 @@ body{
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    font-size: 30px;
+    font-size: 35px;
 }
 
 .secondDisplay{
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .buttons{
@@ -62,4 +62,33 @@ body{
 
 #enterBtn{
     flex-grow:2;
+}
+
+@media (min-width: 600px){
+    *{
+        border-radius: 100px;
+    }
+    .calculator{
+        height: 800px;
+        width: 600px;
+        border-radius: 30px;
+    }
+    .display{
+        height: 200px;
+        width: 500px;
+        margin: 20px 45px 20px 45px;
+        border-radius: 25px;
+    }
+    .firstDisplay{
+        font-size: 45px;
+    }
+    .secondDisplay{
+        font-size: 40px;
+    }
+    .btn{
+        height: 100px;
+        width: 125px;
+        font-size: 25px;
+        border-radius: 25px;
+    }
 }
